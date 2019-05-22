@@ -1,0 +1,13 @@
+[Unit]
+Description=Phenix Robotik Framboise Brain software
+# Wants=
+# After=
+DefaultDependencies=false
+
+[Service]
+Type=simple
+BusName=org.manjaro.pamac.system
+ExecStart=/usr/bin/pamac-system-daemon
+
+[Install]
+WantedBy=sysinit.target
