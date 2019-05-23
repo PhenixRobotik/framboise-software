@@ -10,3 +10,10 @@ configure_file(
   install: true,
   install_dir: get_option('sysconfdir') / 'systemd' / 'user',
 )
+
+
+install_data([
+    'interface.glade',
+  ],
+  install_dir: data_directory
+)

@@ -1,4 +1,10 @@
 
+configure_file(
+  output: 'config.h',
+  configuration: config,
+)
+
+
 framboise_brain = executable('framboise-brain',
   'main.cpp',
   'gui/gui.cpp',
