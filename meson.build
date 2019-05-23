@@ -9,9 +9,5 @@ project('framboise-brain',
   ],
 )
 
-
-
-framboise = executable('framboise',
-
-  install: true,
-)
+subdir('src')
+subdir('data')

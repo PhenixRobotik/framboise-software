@@ -6,8 +6,7 @@ DefaultDependencies=false
 
 [Service]
 Type=simple
-BusName=org.manjaro.pamac.system
-ExecStart=/usr/bin/pamac-system-daemon
+ExecStart=@DaemonExecStart@
 
 [Install]
 WantedBy=sysinit.target
