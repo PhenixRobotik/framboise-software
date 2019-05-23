@@ -8,5 +8,5 @@ configure_file(
   output: 'framboise-brain.service',
   configuration: systemd_config,
   install: true,
-  install_dir: get_option('sysconfdir') / 'systemd' / 'system',
+  install_dir: get_option('sysconfdir') / 'systemd' / 'user',
 )
