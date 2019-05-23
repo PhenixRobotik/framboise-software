@@ -9,5 +9,8 @@ project('framboise-brain',
   ],
 )
 
+gtkmm = dependency('gtkmm-3.0', version: '>=3.10')
+
+
 subdir('src')
 subdir('data')
