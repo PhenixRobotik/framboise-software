@@ -3,6 +3,7 @@
 #include "gui.hpp"
 
 #include <iostream>
+#include <chrono>
 
 BrainWindow* buildBrainWindow() {
   auto glade_file_path = std::string(DATA_DIR) + "/interface.glade";
@@ -23,7 +24,6 @@ BrainWindow::BrainWindow(
   this->fullscreen();
   Gtk::Button* table_button;
 
-
   m_builder->get_widget("button_table_left", table_button);
   table_button->override_background_color(Gdk::RGBA("#FFBF00")); // Jaune
   table_button->override_color(Gdk::RGBA("black"));
@@ -31,20 +31,39 @@ BrainWindow::BrainWindow(
     .connect(sigc::bind<bool>(
       sigc::mem_fun(this, &BrainWindow::on_table_side_button_clicked),
       true
-    ));
+    )
+  );
 
   m_builder->get_widget("button_table_right", table_button);
   table_button->override_background_color(Gdk::RGBA("#8019FF")); // Violet
   table_button->override_color(Gdk::RGBA("white"));
-  table_button->signal_clicked()
-    .connect(sigc::bind<bool>(
+  table_button->signal_clicked().connect(
+    sigc::bind<bool>(
       sigc::mem_fun(this, &BrainWindow::on_table_side_button_clicked),
       false
-    ));
+    )
+  );
 
+  m_timer_dispatcher.connect(sigc::mem_fun(this, &BrainWindow::on_timer_update));
+  on_timer_update();
 }
 
 void BrainWindow::on_table_side_button_clicked(bool side) {
   std::string color = side ? "yellow" : "purple";
   std::cout << "table " + color + " side button clicked" << std::endl;
+}
+
+void BrainWindow::on_timer_update() {
+  std::string timer_string =
+      std::to_string(int(m_timer_current_seconds))
+    + "/"
+    + std::to_string(m_timer_max_seconds)
+    + "s";
+
+  std::cout << timer_string << std::endl;
+
+  Gtk::ProgressBar* bar;
+  m_builder->get_widget("match_progress_bar", bar);
+  bar->set_fraction(m_timer_current_seconds / m_timer_max_seconds);
+  bar->set_text(timer_string);
 }
