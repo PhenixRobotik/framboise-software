@@ -30,5 +30,24 @@ gtkmm = dependency('gtkmm-3.0', version: '>=3.10')
 ###############################################################################
 # Targets
 
+configure_file(
+  output: 'config.h',
+  configuration: config,
+)
+
+
 subdir('data')
-subdir('src')
+subdir('tests')
+
+
+framboise_brain = executable('framboise-brain',
+  'main.cpp',
+  'gui/gui.cpp',
+
+  dependencies: [
+    gtkmm,
+  ],
+
+  install: true,
+  install_dir: get_option('bindir')
+)
