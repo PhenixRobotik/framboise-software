@@ -28,8 +28,7 @@
  */
 #include "robotronik_protocol.h"
 
-#include "../can.h"
-#include "../main.h"
+#include "libraries/can.h"
 
 #include <stdio.h>
 
@@ -49,6 +48,8 @@ static uint16_t err;
 
 static inline void RP_FSM_INIT(RP_Interface *interface);
 static inline void RP_FSM_DATA(RP_Interface *interface);
+
+RP_Interface f4_iface;
 
 //==================================================
 //           Initialization functions

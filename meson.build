@@ -41,6 +41,7 @@ configure_file(
 subdir('data')
 
 subdir('libraries')
+subdir('can_protocol')
 subdir('tests')
 
 subdir('test-can')

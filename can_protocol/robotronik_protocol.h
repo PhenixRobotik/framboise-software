@@ -222,3 +222,6 @@ uint16_t RP_Get_Error();
 /**
  * This function returns the last error code set.
  */
+
+// Internal interface provided by the library
+extern RP_Interface f4_iface;

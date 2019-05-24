@@ -4,8 +4,8 @@ CFLAGS+= -I.
 LD=ld
 LDFLAGS=-L/usr/local/lib -lrt -lpthread -lm
 EXEC=rasptronik
-SRC= $(wildcard test-can/*.c test-can/can/*.c libraries/*.c)
-HDR = $(wildcard test-can/*.h test-can/can/*.h)
+SRC= $(wildcard can_protocol/*.c test-can/*.c libraries/*.c)
+HDR= $(wildcard can_protocol/*.h test-can/*.h libraries/*.h)
 OBJ= $(SRC:.c=.o)
 
 #colors
@@ -48,5 +48,5 @@ run: $(EXEC)
 
 clean:
 	@echo -e "\t${YELLOW}Removing ${LGREEN}*.o${NC}"
-	@rm -rf *.o libraries/*.o test-can/can/*.o test-can/*.o
+	@rm -rf *.o libraries/*.o can_protocol/*.o test-can/*.o
 	@echo -e "${YELLOW}[${GREEN}OK${YELLOW}]${NC}"

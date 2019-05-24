@@ -9,7 +9,6 @@
 void sigterm_handler(int signo);
 void sigint_handler(int signo);
 
-RP_Interface f4_iface;
 RC_Client client;
 volatile sig_atomic_t run;//uart loop
 volatile sig_atomic_t stop = 0;//Ctrl+C
