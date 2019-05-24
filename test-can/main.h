@@ -8,7 +8,6 @@
 
 #include "can/robotronik_protocol.h"
 #include "can/remote_call.h"
-#include "server.h"
 
 #define UART_PATH "/dev/serial0"
 #define UART_SPEED B1000000

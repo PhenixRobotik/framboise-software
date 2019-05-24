@@ -1,7 +1,7 @@
 #include "main.h"
 
-#include "can.h"
 
+#include "libraries/can.h"
 #include "libraries/uart.h"
 #include "libraries/logger.h"
 
