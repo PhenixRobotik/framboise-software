@@ -1,10 +1,11 @@
 CC=gcc
 CFLAGS=-g -W -Wall -ansi -std=c99 -I/usr/local/include -D_DEFAULT_SOURCE -lrt -pthread
+CFLAGS+= -I.
 LD=ld
 LDFLAGS=-L/usr/local/lib -lrt -lpthread -lm
 EXEC=rasptronik
-SRC= $(wildcard *.c ./can/*.c)
-HDR = $(wildcard *.h)
+SRC= $(wildcard test-can/*.c test-can/can/*.c libraries/*.c)
+HDR = $(wildcard test-can/*.h test-can/can/*.h)
 OBJ= $(SRC:.c=.o)
 
 #colors
@@ -47,7 +48,5 @@ run: $(EXEC)
 
 clean:
 	@echo -e "\t${YELLOW}Removing ${LGREEN}*.o${NC}"
-	@rm -rf *.o ./uart/*.o ./client-api/*.o ./player_d/*.o
-	@rm $(EXEC) client player RobotrOvision
+	@rm -rf *.o libraries/*.o test-can/can/*.o test-can/*.o
 	@echo -e "${YELLOW}[${GREEN}OK${YELLOW}]${NC}"
-
