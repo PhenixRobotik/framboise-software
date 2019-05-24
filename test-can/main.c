@@ -2,6 +2,9 @@
 
 #include "can.h"
 
+#include "libraries/uart.h"
+#include "libraries/logger.h"
+
 
 void sigterm_handler(int signo);
 void sigint_handler(int signo);

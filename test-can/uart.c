@@ -1,5 +1,10 @@
 #include "uart.h"
 
+#include "libraries/logger.h"
+
+#include <sys/time.h>
+#include <fcntl.h>
+
 int open_uart(const char* path, speed_t speed){
   //Open the UART file
   int fd = open(path,

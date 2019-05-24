@@ -21,10 +21,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdarg.h>
 #include "robotronik_protocol.h"
+
+#include <stdarg.h>
+
 
 #define RC_NB_FUNCTIONS 32
 #define RC_MAX_DATA RP_MAX_PACKET_SIZE-1//-1 because one byte is used for id

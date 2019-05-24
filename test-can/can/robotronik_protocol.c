@@ -28,6 +28,11 @@
  */
 #include "robotronik_protocol.h"
 
+#include "../can.h"
+#include "../main.h"
+
+#include <stdio.h>
+
 #define RP_EOF 0x00
 #define WRITE_BUFF(p_buffer,byte) *(p_buffer++) = byte;
 #define ENCODE_BYTE(byte,p_buffer,p_code) {\
@@ -115,7 +120,6 @@ int RP_Sync(RP_Interface *interface, uint32_t timeout){
   return 0;
 }
 
-#include "stdio.h"
 void RP_Print_Packet(RP_Packet *packet){
   int i;
   printf("Packet of %d bytes :\n", packet->len);
@@ -156,8 +160,6 @@ void RP_Process_Data(RP_Interface *interface, uint8_t *data, uint16_t len){
   }
 }
 
-#include "../can.h"
-#include "../main.h"
 int RP_Wait_Packet(RP_Interface *interface, uint32_t timeout_ms){
   int start = interface->get_tick();
 

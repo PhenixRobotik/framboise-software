@@ -31,21 +31,20 @@ static int RC_Unpack_Vars(const char *fmt, uint8_t *in, int in_len,  va_list *ar
 //Macros
 #define CHECK_ID(id) ((id >= 0) && (id < RC_NB_FUNCTIONS))
 
-#define RC_CHECK_TYPE(type, count)					\
-  ({									\
-    int valid = 1;							\
-    switch(type){							\
-    case RC_UINT8_T: count += sizeof(uint8_t); break;			\
-    case RC_UINT16_T: count += sizeof(uint16_t); break;			\
-    case RC_UINT32_T: count += sizeof(uint32_t); break;			\
-    case RC_INT: count += sizeof(int); break;				\
-    case RC_FLOAT: count += sizeof(float); break;			\
-    case RC_DOUBLE: count += sizeof(double); break;			\
-    case RC_STRING: count += RC_STR_SIZE; break;			\
-    default: valid = 0; break;						\
-    }									\
-    valid;								\
-  })
+int RC_CHECK_TYPE(char type, int count) {
+    int valid = 1;
+    switch(type){
+    case RC_UINT8_T:  count += sizeof(uint8_t);   break;
+    case RC_UINT16_T: count += sizeof(uint16_t);  break;
+    case RC_UINT32_T: count += sizeof(uint32_t);  break;
+    case RC_INT:      count += sizeof(int);       break;
+    case RC_FLOAT:    count += sizeof(float);     break;
+    case RC_DOUBLE:   count += sizeof(double);    break;
+    case RC_STRING:   count += RC_STR_SIZE;       break;
+    default:          valid = 0;                  break;
+    }
+    return valid;
+}
 
 #ifdef RC_LITTLE_ENDIAN
 #define RC_PACK_VAR_START(var) ((uint8_t*) (&var))
@@ -109,12 +108,15 @@ static int RC_Unpack_Vars(const char *fmt, uint8_t *in, int in_len,  va_list *ar
   }
 
 static int RC_Copy_Format(char *dst, const char fmt[]){
-  int i;
   char c;
   int max_size = 0;
-  
-  for(i = 0; i < RC_FMT_SIZE && (c = dst[i] = fmt[i]) != '\0' && RC_CHECK_TYPE(c, max_size); i++);
-  
+
+  for(int i = 0;
+    i < RC_FMT_SIZE
+    && (c = dst[i] = fmt[i]) != '\0'
+    && RC_CHECK_TYPE(c, max_size);
+    ++i) { };
+
   if(c != '\0' || max_size > RC_MAX_DATA){
     err = RC_WRONG_FORMAT;
     return -1;
