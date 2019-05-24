@@ -1,5 +1,4 @@
-#ifndef __MAIN_H_
-#define __MAIN_H_
+#pragma once
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -20,5 +19,3 @@ extern RP_Interface f4_iface;
 extern RC_Server server;
 extern volatile sig_atomic_t run;
 extern volatile sig_atomic_t stop;
-
-#endif

@@ -1,7 +1,9 @@
+#pragma once
+
 /**
  * Library Remote Call Client/Server @Robotronik
  * remote_call.h
- * This library is meant to run a remote call server between µC. 
+ * This library is meant to run a remote call server between µC.
  *
  * Copyright 2018 Antonin Hirschy
  *
@@ -9,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -17,9 +19,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-#ifndef __RC_SERVER_H_
-#define __RC_SERVER_H_
+**/
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -83,7 +83,7 @@ struct RC_Server_S;
 typedef struct RC_Server_Function_S{
   //Address of the function
   void (*call)(struct RC_Server_S *server);
-  
+
   //"Virtual" prototype
   char params_fmt[RC_FMT_SIZE];
   char return_fmt[RC_FMT_SIZE];
@@ -114,7 +114,7 @@ typedef struct RC_Server_Function_S{
    * RC_FMT_SIZE. See RC_(Server|Client)_Add_Function for more
    * informations.
    */
-  
+
   RC_Call_Type call_type;
   /*
    * See RC_Call_Type enum.
@@ -222,5 +222,3 @@ int RC_Client_Add_Function(RC_Client *client,
 			   const char params_fmt[],
 			   const char return_fmt[]);
 int RC_Call(RC_Client *client, int id, ...);
-
-#endif

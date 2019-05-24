@@ -6,7 +6,7 @@
  * for communication between two MCUs. The protocol was designed for
  * request-response oriented communications. It is why it focuses on
  * performance for asynchronous reception.
- * 
+ *
  * It uses the Consistent Overhead Byte Stuffing algorithm to delimit
  * the frames and for synchronization purposes. CRC-16/BUYPASS is
  * used to detect corrupted frames.
@@ -17,7 +17,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -59,7 +59,7 @@ void RP_Init_Interface(RP_Interface *interface,
   interface->send = send;
   interface->get_tick = get_tick;
   interface->received = false;
-  
+
   //FSM
   interface->update_state = RP_FSM_INIT;
   interface->p_in = interface->buffer_in;
@@ -90,13 +90,13 @@ int RP_Build_Frame(RP_Packet *packet, uint8_t buffer[RP_BUFFER_SIZE]){
 
   uint8_t *p_buffer = buffer;
   uint8_t *p_code = p_buffer++;
-  
+
   int i;
   for(i = 0; i < packet->len; i++){
     const uint8_t byte = packet->data[i];
     ENCODE_BYTE(byte, p_buffer, p_code);
   }
-  
+
   //RP_EOF
   *p_code = p_buffer - p_code;
   *(p_buffer++) = RP_EOF;
@@ -111,7 +111,7 @@ int RP_Sync(RP_Interface *interface, uint32_t timeout){
     err = RP_ERR_LINK | RP_ERR_TIMEOUT;
     return -1;
   }
-  
+
   return 0;
 }
 
@@ -124,7 +124,7 @@ void RP_Print_Packet(RP_Packet *packet){
   }
   printf("\n");
   fflush(stdout);
-      
+
 }
 
 int RP_Send(RP_Interface *interface, RP_Packet *packet, uint32_t timeout){
@@ -140,7 +140,7 @@ int RP_Send(RP_Interface *interface, RP_Packet *packet, uint32_t timeout){
     err = RP_ERR_LINK | RP_ERR_TIMEOUT;
     return -1;
   }
-  
+
   return 0;
 }
 
@@ -160,7 +160,7 @@ void RP_Process_Data(RP_Interface *interface, uint8_t *data, uint16_t len){
 #include "../main.h"
 int RP_Wait_Packet(RP_Interface *interface, uint32_t timeout_ms){
   int start = interface->get_tick();
-  
+
   //interface->received = false;
   while(!interface->received && (interface->get_tick() - start < timeout_ms)){
     uint32_t id;
@@ -170,13 +170,13 @@ int RP_Wait_Packet(RP_Interface *interface, uint32_t timeout_ms){
       RP_Process_Data(&f4_iface, data, count);
     }
   }
-  
+
   if(!interface->received){
     return -1;
   }
-  
+
   interface->received = false;
-  
+
   return 0;
 }
 
@@ -240,7 +240,7 @@ static inline void RP_FSM_INIT(RP_Interface *interface){
 
 static inline void RP_FSM_DATA(RP_Interface *interface){
   FSM_GET_BYTE(interface);
-  
+
   // An EOF flag means end of packet
   if(FSM_BYTE == 0x00){
     interface->received = true;

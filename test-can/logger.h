@@ -1,5 +1,4 @@
-#ifndef __LOGGER_H_
-#define __LOGGER_H_
+#pragma once
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -28,7 +27,7 @@ typedef enum Logger_Level_E{
 typedef struct Logger_S{
   //File descriptors
   int log_fd[4];
-  
+
   //Logger level
   int level_mask;
 }Logger;
@@ -65,5 +64,3 @@ void LOG_Raw(const char *fmt, ...);
 #define log_vraw(fmt, ...) LOG_RAW(fmt, __VA_ARGS__);
 
 #define STR_ERRNO strerror(errno)
-
-#endif

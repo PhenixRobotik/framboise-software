@@ -28,15 +28,15 @@ void LOG_Write(Log_Type type, const char *file, const char *function, int line, 
 				 [LOG_ERROR] = RED "[ERROR]",
 				 [LOG_WARNING] = YEL "[WARNING]",
 				 [LOG_INFO] = GRN "[INFO]"};
-  
+
   if(!(logger.level_mask & LOG_MASK(type)))
     return;
-  
+
   va_list args;
   va_start(args, fmt);
 
   int fd = logger.log_fd[type];
-  
+
   dprintf(fd, "%s %s:%s:%d\n\t" RESET WHT, str_type[type], file, function, line);
   vdprintf(fd, fmt, args);
   dprintf(fd, "\n" RESET);
@@ -49,8 +49,6 @@ void LOG_Raw(const char *fmt, ...){
   va_start(args, fmt);
 
   vdprintf(logger.log_fd[LOG_RAW], fmt, args);
-  
+
   va_end(args);
 }
-
-

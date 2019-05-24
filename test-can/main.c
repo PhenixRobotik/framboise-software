@@ -22,7 +22,7 @@ void RP_Packet_Received(RP_Interface *interface, RP_Packet *packet){
     printf("\n\n");
     fflush(stdout);
 #endif
-    
+
     //RC_Server_Get_Request(&server, packet);
   }
 }
@@ -96,8 +96,8 @@ int main(){
   RC_Client_Add_Function(&client, 0, "sbBuifFs", "sbBuifFs");
 
   RP_Sync(&f4_iface, 10);
-  
-  
+
+
   //Receive data
   run = 1;
   char str_start[RC_STR_SIZE]= {'s', 't', 'a', 'r', 't', '\0'},
@@ -126,12 +126,12 @@ int main(){
   }
 
   // Close SocketCAN ?
-  
+
   log_info("Main loop stopped. Idle state.");
   stop = 0;
   while(!stop);
   log_info("Quit");
-  
+
   return EXIT_SUCCESS;
 }
 

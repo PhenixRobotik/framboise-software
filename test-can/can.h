@@ -1,5 +1,4 @@
-#ifndef CAN_H
-#define CAN_H
+#pragma once
 
 #include <stdint.h>
 
@@ -22,5 +21,3 @@ uint8_t can_transmit(void *link_handler,
 
 // data must have at least 8 bytes available
 int can_read(uint32_t *id, uint8_t *data);
-
-#endif

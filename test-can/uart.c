@@ -21,7 +21,7 @@ int open_uart(const char* path, speed_t speed){
     if(tcgetattr(fd, &options)){
       log_vwarning("Could not get uart options on %s : %s", path, STR_ERRNO);
     }
-    
+
     cfsetospeed(&options, speed);//Output speed
     cfsetispeed(&options, speed);//Input speed
     cfmakeraw(&options);//Use tty as a raw terminal (no control)
@@ -42,11 +42,11 @@ int open_uart(const char* path, speed_t speed){
 
     //Flush any old input data
     tcflush(fd, TCIFLUSH);
-  
+
     return fd;
-    
+
   }while(0);
-  
+
   close(fd);
   return -1;
 }
@@ -62,7 +62,7 @@ uint8_t send_uart(void* link_handler, uint8_t *data, uint16_t len, uint32_t time
   printf("\n");
   fflush(stdout);
 #endif
-  
+
  write(*((int*) link_handler), data, len);
  tcdrain(*((int*) link_handler));
 
@@ -74,5 +74,3 @@ uint32_t get_tick(){
   gettimeofday(&t, NULL);
   return (t.tv_sec * 1000) + (t.tv_usec / 1000);
 }
-
-

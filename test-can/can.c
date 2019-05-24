@@ -23,7 +23,7 @@ int open_can(){
   struct ifreq ifr;
   strcpy(ifr.ifr_name, CAN_DEV);
   ioctl(can_fd, SIOCGIFINDEX, &ifr);
-  
+
   struct sockaddr_can addr;
   addr.can_family = AF_CAN;
   addr.can_ifindex = ifr.ifr_ifindex;
@@ -31,7 +31,7 @@ int open_can(){
   if(bind(can_fd, (struct sockaddr *)&addr, sizeof(addr)) != 0){
     return -1;
   }
-  
+
   return 0;
 }
 
@@ -65,7 +65,7 @@ uint8_t can_transmit(void *link_handler,
     data += frame_size;
   }
   // TODO : timeout / retry
-  
+
   return 0;
 }
 
@@ -81,7 +81,7 @@ int can_read(uint32_t *id, uint8_t *data){
 #ifdef DEBUG_CAN
   printf("CAN_RX : %d bytes, id %d : ", frame.can_dlc, frame.can_id);
 #endif
-  
+
   int i;
   for(i = 0; i < frame.can_dlc; ++i){
     data[i] = frame.data[i];
@@ -93,7 +93,6 @@ int can_read(uint32_t *id, uint8_t *data){
   printf("\n");
   fflush(stdout);
   #endif
-  
+
   return frame.can_dlc;
 }
-

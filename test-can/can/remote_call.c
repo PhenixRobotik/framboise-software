@@ -1,7 +1,7 @@
 /**
  * Library Remote Call Client/Server @Robotronik
  * remote_call.c
- * This library is meant to run a remote call server between µC. 
+ * This library is meant to run a remote call server between µC.
  *
  * Copyright 2018 Antonin Hirschy
  *
@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -69,7 +69,7 @@ static int RC_Unpack_Vars(const char *fmt, uint8_t *in, int in_len,  va_list *ar
 	*(out++) = RC_VAR_GET_BYTE(byte);				\
       }									\
     }									\
-  }								
+  }
 
 #define RC_PACK_STRING(args, out, out_len, success)			\
   {									\
@@ -82,7 +82,7 @@ static int RC_Unpack_Vars(const char *fmt, uint8_t *in, int in_len,  va_list *ar
     }									\
     /* if the last character was '\0', out_len must be decremented */	\
     (c == '\0')?(out_len--, success = 1):(success = 0);			\
-  }						
+  }
 
 #define RC_UNPACK_VAR(args, type, promoted, in, in_len, success)	\
   {									\
@@ -106,7 +106,7 @@ static int RC_Unpack_Vars(const char *fmt, uint8_t *in, int in_len,  va_list *ar
       in_len--;								\
     }									\
     (c == '\0')?(in_len--, success = 1):(success = 0);			\
-  }								
+  }
 
 static int RC_Copy_Format(char *dst, const char fmt[]){
   int i;
@@ -136,7 +136,7 @@ static int RC_Pack_Vars(const char *fmt, uint8_t *out, int out_len,  va_list *ar
       RC_PACK_VAR(*args, uint16_t, int, out, out_len, success);
     }
     else if(c == RC_UINT32_T){
-      RC_PACK_VAR(*args, uint32_t, int, out, out_len, success);      
+      RC_PACK_VAR(*args, uint32_t, int, out, out_len, success);
     }
     else if(c == RC_INT){
       RC_PACK_VAR(*args, int, int, out, out_len, success);
@@ -145,7 +145,7 @@ static int RC_Pack_Vars(const char *fmt, uint8_t *out, int out_len,  va_list *ar
       RC_PACK_VAR(*args, float, double, out, out_len, success);
     }
     else if(c == RC_DOUBLE){
-      RC_PACK_VAR(*args, double, double, out, out_len, success);      
+      RC_PACK_VAR(*args, double, double, out, out_len, success);
     }
     else if(c == RC_STRING){
       RC_PACK_STRING(*args, out, out_len, success);
@@ -156,14 +156,14 @@ static int RC_Pack_Vars(const char *fmt, uint8_t *out, int out_len,  va_list *ar
       return -1;
     }
   }
-  
+
   return (success)?(out_len_tmp - out_len):-1;
-}								
+}
 
 static int RC_Unpack_Vars(const char *fmt, uint8_t *in, int in_len,  va_list *args){
   char c;
   int success = 1;
-  
+
   while((c = *(fmt++)) != '\0' && success){
     if(c == RC_UINT8_T){
       RC_UNPACK_VAR(*args, uint8_t, uint8_t*, in, in_len, success);
@@ -192,7 +192,7 @@ static int RC_Unpack_Vars(const char *fmt, uint8_t *in, int in_len,  va_list *ar
       return -1;
     }
   }
-  
+
   return (success && in_len == 0)?0:-1;
 }
 
@@ -213,7 +213,7 @@ void RC_Server_Init(RC_Server *server, RP_Interface *interface){
   server->interface = interface;
   for(i = 0; i < RC_NB_FUNCTIONS; i++){
     server->functions[i].call = 0;
-  }  
+  }
 }
 
 int RC_Server_Add_Function(RC_Server *server,
@@ -243,7 +243,7 @@ int RC_Server_Add_Function(RC_Server *server,
 
   //Function pointer
   fun->call = function;
-  
+
   //Call type
   fun->call_type = call_type;
 
@@ -255,7 +255,7 @@ int RC_Server_Get_Request(RC_Server *server, RP_Packet *packet){
     err = RC_LINK_ERROR;
     return -1;
   }
-  
+
   //Extracting packet informations
   const int id = packet->data[0];
   const int len = packet->len - 1;
@@ -273,7 +273,7 @@ int RC_Server_Get_Request(RC_Server *server, RP_Packet *packet){
     err = RC_UNDEFINED_FUNCTION;
     return -1;
   }
-  
+
   //Filling request informations
   server->request.id = id;
   server->request.data = data;
@@ -301,7 +301,7 @@ int RC_Server_Poll(RC_Server *server){
 
   server->pending = 0;
   server->functions[server->request.id].call(server);
-  
+
   return 1;
 }
 
@@ -310,7 +310,7 @@ int RC_Server_Get_Args(RC_Server *server, ...){
   va_start(args, server);
 
   RC_Server_Function *const fun = &server->functions[server->request.id];
-  
+
   int r = RC_Unpack_Vars(fun->params_fmt, server->request.data, server->request.len, &args);
 
   va_end(args);
@@ -335,7 +335,7 @@ int RC_Server_Return(RC_Server *server, ...){
     err = RC_INVALID_RETURN;
     return -1;
   }
-  
+
   va_end(args);
   return RP_Send(server->interface, packet, RC_TRANSFERT_TIMEOUT);
 }
@@ -350,7 +350,7 @@ void RC_Client_Init(RC_Client *client, RP_Interface *interface, int id_server){
   client->id_server = id_server;
   for(i = 0; i < RC_NB_FUNCTIONS; i++){
     client->functions[i].used = false;
-  }  
+  }
 }
 
 int RC_Client_Add_Function(RC_Client *client,
@@ -439,6 +439,3 @@ int RC_Call(RC_Client *client, int id, ...){
 
   return 0;
 }
-
-
-

@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Library Robotronik Protocol, CAN GANGE EDITION
  * robotronik_protocol.h
@@ -6,7 +7,7 @@
  * for communication between two MCUs. The protocol was designed for
  * request-response oriented communications. It is why it focuses on
  * performance for asynchronous reception.
- * 
+ *
  * It uses the Consistent Overhead Byte Stuffing algorithm to delimit
  * the frames and for synchronization purposes. CRC-16/BUYPASS is
  * used to detect corrupted frames.
@@ -17,7 +18,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,8 +27,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef __ROBOTRONIK_PROTOCOL_H
-#define __ROBOTRONIK_PROTOCOL_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -48,7 +47,7 @@ typedef struct RP_Packet_S{
 /*
  * Here is the frame format, by byte :
  * [COBS init] [data]* [EOF]
- * 
+ *
  * The max value of [COBS init] is 255, so we allow 254 data bytes between
  * [COBS init] and [EOF] excluded.
  *
@@ -56,10 +55,10 @@ typedef struct RP_Packet_S{
  */
 
 typedef struct RP_Interface_S{
-  
+
   uint8_t (*send)(void* link_handler, uint32_t id, uint8_t *data, uint16_t length, uint32_t timeout_ms);
   uint32_t (*get_tick)();
-  
+
   //Reception buffer
   uint8_t buffer_in[RP_BUFFER_SIZE];
 
@@ -79,10 +78,10 @@ typedef struct RP_Interface_S{
    * sending. However, you must ensure that you're not doing
    * concurrent access.
    */
-  
+
   //Output buffer
   uint8_t buffer_out[RP_BUFFER_SIZE];
-  
+
   //Finite state machine for reception
   void (*update_state)(struct RP_Interface_S*);
   uint8_t bs_count;//COBS counter
@@ -223,5 +222,3 @@ uint16_t RP_Get_Error();
 /**
  * This function returns the last error code set.
  */
-
-#endif
