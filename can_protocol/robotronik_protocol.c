@@ -28,7 +28,7 @@
  */
 #include "robotronik_protocol.h"
 
-#include "libraries/can.h"
+#include "low_level/can.h"
 
 #include <stdio.h>
 

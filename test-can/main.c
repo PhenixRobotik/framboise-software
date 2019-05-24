@@ -1,9 +1,9 @@
 #include "main.h"
 
 
-#include "libraries/can.h"
-#include "libraries/uart.h"
-#include "libraries/logger.h"
+#include "low_level/can.h"
+#include "low_level/uart.h"
+#include "low_level/logger.h"
 
 
 void sigterm_handler(int signo);

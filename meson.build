@@ -40,7 +40,7 @@ configure_file(
 
 subdir('data')
 
-subdir('libraries')
+subdir('low_level')
 subdir('can_protocol')
 subdir('tests')
 
