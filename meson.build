@@ -25,6 +25,8 @@ config.set('DATA_DIR', '"@0@"'.format(get_option('prefix') / data_directory))
 ###############################################################################
 # Dependencies
 
+thread = dependency('threads')
+
 gtkmm = dependency('gtkmm-3.0', version: '>=3.10')
 
 ###############################################################################
@@ -49,8 +51,10 @@ subdir('test-can')
 framboise_brain = executable('framboise-brain',
   'main.cpp',
   'gui/gui.cpp',
+  'worker/worker.cpp',
 
   dependencies: [
+    thread,
     gtkmm,
   ],
 
