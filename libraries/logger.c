@@ -1,5 +1,7 @@
 #include "logger.h"
 
+#include <stdarg.h>
+
 #define RED   "\x1B[31;1m"
 #define GRN   "\x1B[32;1m"
 #define YEL   "\x1B[33;1m"
