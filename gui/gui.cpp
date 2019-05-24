@@ -51,6 +51,13 @@ BrainWindow::BrainWindow(
 void BrainWindow::on_table_side_button_clicked(bool side) {
   std::string color = side ? "yellow" : "purple";
   std::cout << "table " + color + " side button clicked" << std::endl;
+  m_side = side;
+
+  // Disable to prevent unwanted clicks
+  Gtk::Box* box;
+  m_builder->get_widget("buttons_box", box);
+  box->set_sensitive(false);
+  // box->override_background_color(Gdk::RGBA("#000000"));
 }
 
 void BrainWindow::on_timer_update() {
