@@ -30,6 +30,8 @@ gtkmm = dependency('gtkmm-3.0', version: '>=3.10')
 ###############################################################################
 # Targets
 
+rootInclude = include_directories('.')
+
 configure_file(
   output: 'config.h',
   configuration: config,
@@ -37,8 +39,11 @@ configure_file(
 
 
 subdir('data')
+
+subdir('libraries')
 subdir('tests')
 
+subdir('test-can')
 
 framboise_brain = executable('framboise-brain',
   'main.cpp',
