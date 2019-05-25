@@ -46,6 +46,9 @@ BrainWindow::BrainWindow(
 
   m_timer_dispatcher.connect(sigc::mem_fun(this, &BrainWindow::on_timer_update));
   on_timer_update();
+
+  m_can_textview_dispatcher.connect(sigc::mem_fun(this, &BrainWindow::on_can_textview_update));
+  on_can_textview_update();
 }
 
 void BrainWindow::on_table_side_button_clicked(bool side) {
@@ -73,4 +76,12 @@ void BrainWindow::on_timer_update() {
   m_builder->get_widget("match_progress_bar", bar);
   bar->set_fraction(m_timer_current_seconds / m_timer_max_seconds);
   bar->set_text(timer_string);
+}
+
+
+void BrainWindow::on_can_textview_update() {
+  Gtk::TextView* view;
+  m_builder->get_widget("can_values_viewer", view);
+
+  view->get_buffer()->set_text(m_can_textview_content);
 }
