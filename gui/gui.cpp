@@ -83,7 +83,11 @@ void BrainWindow::on_can_textview_update() {
   Gtk::TextView* view;
   m_builder->get_widget("can_values_viewer", view);
 
-  view->get_buffer()->set_text(m_can_textview_content);
-  view->get_buffer()->get_end_iter()
+  auto buffer = view->get_buffer();
 
+  buffer->set_text(m_can_textview_content);
+
+  auto mark = buffer->get_insert();
+  buffer->move_mark(mark, buffer->end());
+  view->scroll_to(mark);
 }
