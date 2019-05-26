@@ -84,4 +84,6 @@ void BrainWindow::on_can_textview_update() {
   m_builder->get_widget("can_values_viewer", view);
 
   view->get_buffer()->set_text(m_can_textview_content);
+  view->get_buffer()->get_end_iter()
+
 }

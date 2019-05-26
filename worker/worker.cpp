@@ -30,6 +30,7 @@ void Worker::start() {
         std::chrono::duration_cast<std::chrono::milliseconds>(now - debut_match)
           .count() / 1000.0;
       m_brain_window->timer_update_timer(secs_from_start);
+      m_brain_window->can_textview_append(std::string("le sang de tes morts\n"));
 
       std::this_thread::sleep_until(x);
     }
